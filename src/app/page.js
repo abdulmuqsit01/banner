@@ -2,24 +2,37 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import './globals.css'
+import '@style/home.css'
 
 export default function Home() {
-
+  
   const [nama, setNama] = useState('Abdul Muqsit Fadil');
-  const [newNama, setNewNama] = useState("");
+  const [isSimpan, setSimpan] = useState("");
 
-  function handleInputChange(event){
-    setNewNama(event.target.value);
+
+  function handleChangeName(event) {
+    setSimpan(event.target.value);
   }
 
-  function handlerGantiNama(){
-    setNama(newNama);
+  function handlerGantiNama() {
+    if (isSimpan.trim() !== "") {
+      setNama(isSimpan);
+      setSimpan("");
+    }
   }
+
+  function pressEnter(event) {
+    if (event.key === 'Enter') {
+      handlerGantiNama();
+    }
+  }
+
+  const isInputEmpty = isSimpan.trim() === "";
+
 
 
   return (
-    <div className='body'>
+    <>
       <div className="banner-container">
         {/* Kartunya */}
         <div className="header-banner-wrapper">
@@ -46,20 +59,17 @@ export default function Home() {
         </div>
         <div className="cta-banner-wrapper">
           {/* Tombol CTA */}
-          <div>
-            <input type='text' value={newNama} onChange={handleInputChange}>
-            </input>
+          <div className="text-form">
+                <input type="text" name="inputnama" value={isSimpan} onChange={handleChangeName} onKeyPress={pressEnter} />
           </div>
-          <div className='cta-button' 
-            style={{
-              marginTop: '12px'
-            }}
-            
-            onClick={handlerGantiNama}>
-              <p>Ganti Nama</p>
+          <div
+            className="cta-button"
+            style={{ marginTop: "18px", backgroundColor: isInputEmpty ? "gray" : "blue", cursor: isInputEmpty ? "not-allowed" : "pointer" }}
+            onClick={isInputEmpty ? null : handlerGantiNama}>
+            <p style={{ color: isInputEmpty ? "white" : "black" }}>{isInputEmpty ? "DISABLED" : "Ganti Nama"}</p>
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
