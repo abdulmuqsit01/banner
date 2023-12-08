@@ -1,10 +1,5 @@
-import { Inter } from 'next/font/google'
-
 import '@style/global.css';
 import Navbar from '@components/navbar/navbar';
-
-
-const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'Abdul Muqsit Fadil',
@@ -14,9 +9,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+      </head>
       <body>
-      <Navbar></Navbar>{children}
+        <Navbar />
+        {children}
       </body>
     </html>
-  )
+  );
 }
